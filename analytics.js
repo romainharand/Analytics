@@ -465,3 +465,117 @@ setInterval(function(){
 <script>
 
 
+//Update HERA internalvar
+var hera_hostname = document.location.host
+if (hera_hostname === "mr.mgen.fr") {
+var urlPath = window.location.pathname;
+var urlArray = urlPath.split( '/' );
+if (urlArray[2] === undefined || urlArray[2] === "" ) {
+	tC.internalvars.page_name_via_url = urlArray[1];
+}
+else if (urlArray[3] === undefined && urlArray[2] !== undefined ){
+	tC.internalvars.page_name_via_url = urlArray[2];
+} 
+else if (urlArray[4] === undefined && urlArray[3] !== undefined ) {
+	tC.internalvars.page_name_via_url = urlArray[3];
+}
+else if (urlArray[5] === undefined && urlArray[4] !== undefined ) {
+	tC.internalvars.page_name_via_url = urlArray[4];
+}
+else tC.internalvars.page_name_via_url = urlArray[5];
+}
+
+
+// SmartTag HERA complet qui fonctionne parfaitement
+<script language="javascript">
+<!--
+// For the first page being viewed
+if (window.addEventListener){
+        window.ATInternet = {
+            onTrackerLoad: function(){
+                var ATconfig = {};
+                ATconfig.site = tC.internalvars.siteLevel1;
+                var ATTag = new window.ATInternet.Tracker.Tag(ATconfig);
+                ATTag.page.set({
+                    name: tC.internalvars.page_name_via_url,
+                    level2: '1'
+                });
+       ATTag.customVars.set({
+      site: {
+        "1": tC.internalvars.company_user_hera,
+        "2": tC.internalvars.direction_user_hera,
+        "3": tC.internalvars.sous_direction_user_hera
+        }})
+            ATTag.identifiedVisitor.set({
+        id: tC.internalvars.user_id_hera
+      });
+                ATTag.dispatch();
+            }
+        };
+        (function(){
+            var at = document.createElement('script');
+            at.type = 'text/javascript';
+            at.async = true;
+            at.src = '//tag.aticdn.net/559311/smarttag.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0] || document.getElementsByTagName('script')[0].parentNode).insertBefore(at, null);
+        })();
+    }  
+ // for pages with HREF being changed 
+  // store url on load
+var currentPage = location.href;
+// listen for changes
+setInterval(function(){
+    if (currentPage != location.href)
+    {
+        // page has changed, set new page as 'current'
+        currentPage = location.href;
+        // do your thing..
+	var urlPath = window.location.pathname;
+	var urlArray = urlPath.split( '/' );
+	if (urlArray[2] === undefined || urlArray[2] === "" ) {
+	page_name_hera = urlArray[1];
+}
+else if (urlArray[3] === undefined && urlArray[2] !== undefined ){
+	page_name_hera = urlArray[2];
+} 
+else if (urlArray[4] === undefined && urlArray[3] !== undefined ) {
+	page_name_hera = urlArray[3];
+}
+else if (urlArray[5] === undefined && urlArray[4] !== undefined ) {
+	page_name_hera = urlArray[4];
+}
+else page_name_hera = urlArray[5];
+
+      if (window.addEventListener){
+        window.ATInternet = {
+            onTrackerLoad: function(){
+                var ATconfig = {};
+                ATconfig.site = tC.internalvars.siteLevel1;
+                var ATTag = new window.ATInternet.Tracker.Tag(ATconfig);
+                ATTag.page.set({
+                    name: page_name_hera,
+                    level2: '1'
+                });
+       ATTag.customVars.set({
+      site: {
+        "1": tC.internalvars.company_user_hera,
+        "2": tC.internalvars.direction_user_hera,
+        "3": tC.internalvars.sous_direction_user_hera
+        }})
+            ATTag.identifiedVisitor.set({
+        id: tC.internalvars.user_id_hera
+      });
+                ATTag.dispatch();
+            }
+        };
+        (function(){
+            var at = document.createElement('script');
+            at.type = 'text/javascript';
+            at.async = true;
+            at.src = '//tag.aticdn.net/559311/smarttag.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0] || document.getElementsByTagName('script')[0].parentNode).insertBefore(at, null);
+        })();
+    }
+    }
+}, 5000);
+<script>
