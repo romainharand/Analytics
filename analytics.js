@@ -465,5 +465,3 @@ setInterval(function(){
 <script>
 
 
-// Test with Visual Studio 
-var coucou = "hello"
