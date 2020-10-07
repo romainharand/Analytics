@@ -463,3 +463,7 @@ setInterval(function(){
     }
 }, 5000);
 <script>
+
+
+// Test with Visual Studio 
+var coucou = "hello"
