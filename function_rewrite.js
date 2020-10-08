@@ -1,4 +1,4 @@
-
+//Fonction pour traiter la syntaxe
 function rewriteAT(myString) {
     var myNewString = myString.charAt(0).toUpperCase() + myString.substring(1).toLowerCase(); // Ajout d'une majuscule à la première lettre de la chaîne
     var myNewString = myNewString.replace(/[\,\-\/#!$%'\^&\*;:{}=\`~()@\+\?><\[\]\+]/g, ""); // Suppression de tous les caractères spéciaux
