@@ -382,92 +382,9 @@ for(i=0; i<tab_event_values.length; i++){
 
 
 
-// Trigger a pageView based on HREF changes
-// SmartTag HERA complet qui fonctionne parfaitement
-<script language="javascript">
-<!--
-// For the first page being viewed
-if (window.addEventListener){
-        window.ATInternet = {
-            onTrackerLoad: function(){
-                var ATconfig = {};
-                ATconfig.site = tC.internalvars.siteLevel1;
-                var ATTag = new window.ATInternet.Tracker.Tag(ATconfig);
-                ATTag.page.set({
-                    name: tC.internalvars.page_name_via_url,
-                    level2: '1'
-                });
-       ATTag.customVars.set({
-      site: {
-        "1": tC.internalvars.company_user_hera,
-        "2": tC.internalvars.direction_user_hera,
-        "3": tC.internalvars.sous_direction_user_hera
-        }})
-            ATTag.identifiedVisitor.set({
-        id: tC.internalvars.user_id_hera
-      });
-                ATTag.dispatch();
-            }
-        };
-        (function(){
-            var at = document.createElement('script');
-            at.type = 'text/javascript';
-            at.async = true;
-            at.src = '//tag.aticdn.net/559311/smarttag.js';
-            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0] || document.getElementsByTagName('script')[0].parentNode).insertBefore(at, null);
-        })();
-    }  
- // for pages with HREF being changed 
-  // store url on load
-var currentPage = location.href;
-// listen for changes
-setInterval(function(){
-    if (currentPage != location.href)
-    {
-        // page has changed, set new page as 'current'
-        currentPage = location.href;
-        // do your thing..
-	var urlPath = window.location.pathname;
-	var urlArray = urlPath.split( '/' );
-	page_name_hera = urlArray[2];
-      if (window.addEventListener){
-        window.ATInternet = {
-            onTrackerLoad: function(){
-                var ATconfig = {};
-                ATconfig.site = tC.internalvars.siteLevel1;
-                var ATTag = new window.ATInternet.Tracker.Tag(ATconfig);
-                ATTag.page.set({
-                    name: page_name_hera,
-                    level2: '1'
-                });
-       ATTag.customVars.set({
-      site: {
-        "1": tC.internalvars.company_user_hera,
-        "2": tC.internalvars.direction_user_hera,
-        "3": tC.internalvars.sous_direction_user_hera
-        }})
-            ATTag.identifiedVisitor.set({
-        id: tC.internalvars.user_id_hera
-      });
-                ATTag.dispatch();
-            }
-        };
-        (function(){
-            var at = document.createElement('script');
-            at.type = 'text/javascript';
-            at.async = true;
-            at.src = '//tag.aticdn.net/559311/smarttag.js';
-            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0] || document.getElementsByTagName('script')[0].parentNode).insertBefore(at, null);
-        })();
-    }
-    }
-}, 5000);
-<script>
-
-
 //Update HERA internalvar
 var hera_hostname = document.location.host
-if (hera_hostname === "mr.mgen.fr") {
+if (hera_hostname === "xx.xxx.fr") {
 var urlPath = window.location.pathname;
 var urlArray = urlPath.split( '/' );
 if (urlArray[2] === undefined || urlArray[2] === "" ) {
@@ -486,67 +403,83 @@ else tC.internalvars.page_name_via_url = urlArray[5];
 }
 
 
-// SmartTag HERA complet qui fonctionne parfaitement
+
+// SmartTag qui fonctionne parfaitement
 <script language="javascript">
-<!--
 // For the first page being viewed
-if (window.addEventListener){
-        window.ATInternet = {
-            onTrackerLoad: function(){
-                var ATconfig = {};
-                ATconfig.site = tC.internalvars.siteLevel1;
-                var ATTag = new window.ATInternet.Tracker.Tag(ATconfig);
-                ATTag.page.set({
-                    name: tC.internalvars.page_name_via_url,
-                    level2: '1'
-                });
-       ATTag.customVars.set({
-      site: {
-        "1": tC.internalvars.company_user_hera,
-        "2": tC.internalvars.direction_user_hera,
-        "3": tC.internalvars.sous_direction_user_hera
-        }})
-            ATTag.identifiedVisitor.set({
-        id: tC.internalvars.user_id_hera
-      });
-                ATTag.dispatch();
-            }
-        };
-        (function(){
-            var at = document.createElement('script');
-            at.type = 'text/javascript';
-            at.async = true;
-            at.src = '//tag.aticdn.net/559311/smarttag.js';
-            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0] || document.getElementsByTagName('script')[0].parentNode).insertBefore(at, null);
-        })();
-    }  
- // for pages with HREF being changed 
-  // store url on load
-var currentPage = location.href;
-// listen for changes
-setInterval(function(){
-    if (currentPage != location.href)
-    {
-        // page has changed, set new page as 'current'
-        currentPage = location.href;
-        // do your thing..
+
+// Gestion de l'ID unique
+var user_id_hera = "";
+var connected_user = window.CONNECTED_USER;
+if (typeof connected_user !== "undefined") {
+  var connected_user_uid = connected_user.uid;
+  user_id_hera = connected_user_uid;
+} else {
+  user_id_hera = ""
+}
+  
+
+// Gestion des IDs de site
+var IDSiteLevels = "";
+var urlPathSites = window.location.pathname;
+var urlArraySites = urlPathSites.split( '/' );
+if ((urlArraySites[2] === undefined || urlArraySites[2] === "") && urlArraySites[1] === "accueil"){
+	IDSiteLevels = 1
+}
+else if (urlArraySites[2] === "toute-lactualite") {
+	IDSiteLevels = 2
+}
+else if (urlArraySites[2] === "directions") {
+	IDSiteLevels = 3
+}
+else if (urlArraySites[2] === "groupe-mgen") {
+	IDSiteLevels = 4
+}
+else if (urlArraySites[2] === "services-rh") {
+	IDSiteLevels = 5
+}
+else if (urlArraySites[2] === "kiosque") {
+	IDSiteLevels = 6
+}
+else if (urlArraySites[2] === "hub-abo") {
+	IDSiteLevels = 7
+}
+
+
+//Gestion des chapitres et noms des pages
+  var chapitre1 = "";
+    var chapitre2 = "";
+    var chapitre3 = "";
+    var page_name_hera = "";   
 	var urlPath = window.location.pathname;
 	var urlArray = urlPath.split( '/' );
 	if (urlArray[2] === undefined || urlArray[2] === "" ) {
-	page_name_hera = urlArray[1];
+	page_name_hera = rewriteATForHera(urlArray[1]);
 }
 else if (urlArray[3] === undefined && urlArray[2] !== undefined ){
-	page_name_hera = urlArray[2];
+	page_name_hera = rewriteATForHera(urlArray[2])
 } 
 else if (urlArray[4] === undefined && urlArray[3] !== undefined ) {
-	page_name_hera = urlArray[3];
+	chapitre1 = rewriteATForHera(urlArray[2]);
+	page_name_light = rewriteATForHera(urlArray[3]);
+	page_name_hera = chapitre1 + "::" + page_name_light
 }
 else if (urlArray[5] === undefined && urlArray[4] !== undefined ) {
-	page_name_hera = urlArray[4];
+	chapitre1 = rewriteATForHera(urlArray[2]);
+	chapitre2 = rewriteATForHera(urlArray[3]);
+	page_name_light = rewriteATForHera(urlArray[4]);
+	page_name_hera = chapitre1 + "::" + chapitre2 + "::" + page_name_light
 }
-else page_name_hera = urlArray[5];
-
-      if (window.addEventListener){
+else if (urlArray[5] !== undefined) {
+	 chapitre1 = rewriteATForHera(urlArray[2]);
+	 chapitre2 = rewriteATForHera(urlArray[3]);
+	 chapitre3 = rewriteATForHera(urlArray[4]);
+	 page_name_light = rewriteATForHera(urlArray[5]);
+	 page_name_hera = chapitre1 + "::" + chapitre2 + "::" + chapitre3 + "::" + page_name_light
+} 
+  
+  
+  if (window.addEventListener){
         window.ATInternet = {
             onTrackerLoad: function(){
                 var ATconfig = {};
@@ -554,7 +487,7 @@ else page_name_hera = urlArray[5];
                 var ATTag = new window.ATInternet.Tracker.Tag(ATconfig);
                 ATTag.page.set({
                     name: page_name_hera,
-                    level2: '1'
+                    level2: IDSiteLevels
                 });
        ATTag.customVars.set({
       site: {
@@ -563,7 +496,7 @@ else page_name_hera = urlArray[5];
         "3": tC.internalvars.sous_direction_user_hera
         }})
             ATTag.identifiedVisitor.set({
-        id: tC.internalvars.user_id_hera
+        id: user_id_hera
       });
                 ATTag.dispatch();
             }
@@ -572,47 +505,7 @@ else page_name_hera = urlArray[5];
             var at = document.createElement('script');
             at.type = 'text/javascript';
             at.async = true;
-            at.src = '//tag.aticdn.net/559311/smarttag.js';
-            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0] || document.getElementsByTagName('script')[0].parentNode).insertBefore(at, null);
-        })();
-    }
-    }
-}, 5000);
-<script>
-
-
-
-// SmartTag HERA complet qui fonctionne parfaitement (Test sur les chapters)
-<script language="javascript">
-<!--
-// For the first page being viewed
-if (window.addEventListener){
-        window.ATInternet = {
-            onTrackerLoad: function(){
-                var ATconfig = {};
-                ATconfig.site = tC.internalvars.siteLevel1;
-                var ATTag = new window.ATInternet.Tracker.Tag(ATconfig);
-                ATTag.page.set({
-                    name: tC.internalvars.page_name_via_url,
-                    level2: '1'
-                });
-       ATTag.customVars.set({
-      site: {
-        "1": tC.internalvars.company_user_hera,
-        "2": tC.internalvars.direction_user_hera,
-        "3": tC.internalvars.sous_direction_user_hera
-        }})
-            ATTag.identifiedVisitor.set({
-        id: tC.internalvars.user_id_hera
-      });
-                ATTag.dispatch();
-            }
-        };
-        (function(){
-            var at = document.createElement('script');
-            at.type = 'text/javascript';
-            at.async = true;
-            at.src = '//tag.aticdn.net/559311/smarttag.js';
+            at.src = '//tag.aticdn.net/XXXXX/smarttag.js';
             (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0] || document.getElementsByTagName('script')[0].parentNode).insertBefore(at, null);
         })();
     }  
@@ -626,6 +519,43 @@ setInterval(function(){
         // page has changed, set new page as 'current'
         currentPage = location.href;
         // do your thing..
+      
+// Gestion de l'ID unique
+var user_id_hera = "";
+var connected_user = window.CONNECTED_USER;
+if (typeof connected_user !== "undefined") {
+  var connected_user_uid = connected_user.uid;
+  user_id_hera = connected_user_uid;
+} else {
+  user_id_hera = ""
+}
+
+// Gestion des IDs de site
+var IDSiteLevels = "";
+var urlPathSites = window.location.pathname;
+var urlArraySites = urlPathSites.split( '/' );
+if (urlArraySites[2] === undefined && urlArraySites[1] === "accueil"){
+	IDSiteLevels = 1
+}
+else if (urlArraySites[2] === "toute-lactualite") {
+	IDSiteLevels = 2
+}
+else if (urlArraySites[2] === "directions") {
+	IDSiteLevels = 3
+}
+else if (urlArraySites[2] === "groupe-mgen") {
+	IDSiteLevels = 4
+}
+else if (urlArraySites[2] === "services-rh") {
+	IDSiteLevels = 5
+}
+else if (urlArraySites[2] === "kiosque") {
+	IDSiteLevels = 6
+}
+else if (urlArraySites[2] === "hub-abo") {
+	IDSiteLevels = 7
+}      
+      
     var chapitre1 = "";
     var chapitre2 = "";
     var chapitre3 = "";
@@ -633,34 +563,29 @@ setInterval(function(){
 	var urlPath = window.location.pathname;
 	var urlArray = urlPath.split( '/' );
 	if (urlArray[2] === undefined || urlArray[2] === "" ) {
-	page_name_hera = urlArray[1];
+	page_name_hera = rewriteATForHera(urlArray[1]);
 }
 else if (urlArray[3] === undefined && urlArray[2] !== undefined ){
-	chapitre1 = urlArray[1];
-	page_name_light = urlArray[2];
-	page_name_hera = chapitre1 + "::" + page_name_light
+	page_name_hera = rewriteATForHera(urlArray[2])
 } 
 else if (urlArray[4] === undefined && urlArray[3] !== undefined ) {
-	chapitre1 = urlArray[1];
-	chapitre2 = urlArray[2];
-	page_name_light = urlArray[3];
-	page_name_hera = chapitre1 + "::" + chapitre2 + "::" + page_name_light
+	chapitre1 = rewriteATForHera(urlArray[2]);
+	page_name_light = rewriteATForHera(urlArray[3]);
+	page_name_hera = chapitre1 + "::" + page_name_light
 }
 else if (urlArray[5] === undefined && urlArray[4] !== undefined ) {
-	chapitre1 = urlArray[1];
-	chapitre2 = urlArray[2];
-	chapitre3 = urlArray[3];
-	page_name_light = urlArray[4];
-	page_name_hera = chapitre1 + "::" + chapitre2 + "::" + chapitre3 + "::" + page_name_light
+	chapitre1 = rewriteATForHera(urlArray[2]);
+	chapitre2 = rewriteATForHera(urlArray[3]);
+	page_name_light = rewriteATForHera(urlArray[4]);
+	page_name_hera = chapitre1 + "::" + chapitre2 + "::" + page_name_light
 }
 else if (urlArray[5] !== undefined) {
-	 chapitre1 = urlArray[1];
-	 chapitre2 = urlArray[2];
-	 chapitre3 = urlArray[3];
-	 page_name_light = urlArray[5];
+	 chapitre1 = rewriteATForHera(urlArray[2]);
+	 chapitre2 = rewriteATForHera(urlArray[3]);
+	 chapitre3 = rewriteATForHera(urlArray[4]);
+	 page_name_light = rewriteATForHera(urlArray[5]);
 	 page_name_hera = chapitre1 + "::" + chapitre2 + "::" + chapitre3 + "::" + page_name_light
 } 
-
       if (window.addEventListener){
         window.ATInternet = {
             onTrackerLoad: function(){
@@ -669,7 +594,7 @@ else if (urlArray[5] !== undefined) {
                 var ATTag = new window.ATInternet.Tracker.Tag(ATconfig);
                 ATTag.page.set({
                     name: page_name_hera,
-                    level2: '1'
+                    level2: IDSiteLevels
                 });
        ATTag.customVars.set({
       site: {
@@ -678,7 +603,7 @@ else if (urlArray[5] !== undefined) {
         "3": tC.internalvars.sous_direction_user_hera
         }})
             ATTag.identifiedVisitor.set({
-        id: tC.internalvars.user_id_hera
+        id: user_id_hera
       });
                 ATTag.dispatch();
             }
@@ -687,10 +612,11 @@ else if (urlArray[5] !== undefined) {
             var at = document.createElement('script');
             at.type = 'text/javascript';
             at.async = true;
-            at.src = '//tag.aticdn.net/559311/smarttag.js';
+            at.src = '//tag.aticdn.net/XXXXX/smarttag.js';
             (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0] || document.getElementsByTagName('script')[0].parentNode).insertBefore(at, null);
         })();
     }
     }
 }, 5000);
 <script>
+

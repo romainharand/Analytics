@@ -23,3 +23,10 @@ function rewriteAT(myString) {
     var myNewString = myNewString.replace(/[\347]/g, "c"); // Remplacement des "c" majuscule avec accent par "c" sans accent
     return myNewString;
 }
+
+
+// Fonction rewriteHERA pour supprimer les - et mettre des _
+function rewriteATForHera(mystring) {
+    var myNewString = myString.replace("-", "_");
+    return myNewString;
+}
