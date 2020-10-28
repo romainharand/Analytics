@@ -620,3 +620,42 @@ else if (urlArray[5] !== undefined) {
 }, 5000);
 <script>
 
+
+
+// dernier tag SimSite
+<script type="text/javascript">
+
+var wa = document.createElement("script");
+wa.id = "tc_script_291_1";
+    wa_s = document.getElementsByTagName("script")[0];
+wa.src = "https://targetemsecure.blob.core.windows.net/"+tC.internalvars.simsite_js_call+".js";
+wa.type = "text/javascript";
+wa_s.parentNode.insertBefore(wa, wa_s);
+wa.bt_queue = [];
+wa.afterInit = function(){
+  wa.bt_queue.push({ 
+    "customIdentifier": tc_vars["user_id"],
+    "tagValues":[
+	{ "tag": "PAGE_NAME", "value": rewriteATForSimSite(tc_vars["page_name"]) },
+	{ "tag": "URL", "value": rewriteATForSimSite(tc_vars["page_path"])},
+	{ "tag": "PAGE_ESPACE_PERSONNEL", "value": rewriteATForSimSite(tc_vars["page_path"])},      
+	{ "tag": "WEB_PROFIL_CONTACT", "value": tc_vars["user_contract"]},
+    { "tag": "WEB_CONNEXION", "value": tC.internalvars.user_connected_SimSite },
+    { "tag": "WEB_CONNEXION_LAST_DT", "value": "2020-10-28" }
+	],
+    "isEvent": true, 
+    "isTargeting": true,
+    "async": true 
+  });
+};
+
+<script>
+
+
+// Internalvars pour le user connecté SimSite
+var tC.internalvars.user_connected_SimSite = "";
+var web_connexion = "";
+if (tc_vars["user_type"] === "anonyme" || tc_vars["user_type"] === "" || tc_vars["user_type"] === undefined){
+	tC.internalvars.user_connected_SimSite = 0
+}
+else tC.internalvars.user_connected_SimSite = 1

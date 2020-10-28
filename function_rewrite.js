@@ -30,3 +30,9 @@ function rewriteATForHera(mystring) {
     var myNewString = myString.replace("-", "_");
     return myNewString;
 }
+
+// Fonction rewriteSimSite pour supprimer les / et mettre des _
+function rewriteATForSimSite(mystring) {
+    var myNewString = myString.replace(/[/]/g,'_');
+    return myNewString;
+}
