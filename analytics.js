@@ -659,3 +659,554 @@ if (tc_vars["user_type"] === "anonyme" || tc_vars["user_type"] === "" || tc_vars
 	tC.internalvars.user_connected_SimSite = 0
 }
 else tC.internalvars.user_connected_SimSite = 1
+
+
+
+
+
+
+// Tag Hera qui fonctionne parfaitement
+<script language="javascript">
+// For the first page being viewed
+
+// Gestion de l'ID unique
+var user_id_hera = "";
+var connected_user = window.CONNECTED_USER;
+if (typeof connected_user !== "undefined") {
+  var connected_user_uid = connected_user.uid;
+  user_id_hera = connected_user_uid;
+} else {
+  user_id_hera = ""
+}
+  
+
+// Gestion des IDs de site
+var IDSiteLevels = "";
+var urlPathSites = window.location.pathname;
+var urlArraySites = urlPathSites.split( '/' );
+if ((urlArraySites[2] === undefined || urlArraySites[2] === "") && urlArraySites[1] === "accueil"){
+	IDSiteLevels = 1
+}
+else if (urlArraySites[2] === "toute-lactualite") {
+	IDSiteLevels = 2
+}
+else if (urlArraySites[2] === "directions") {
+	IDSiteLevels = 3
+}
+else if (urlArraySites[2] === "groupe-mgen") {
+	IDSiteLevels = 4
+}
+else if (urlArraySites[2] === "services-rh") {
+	IDSiteLevels = 5
+}
+else if (urlArraySites[2] === "kiosque") {
+	IDSiteLevels = 6
+}
+else if (urlArraySites[2] === "hub-abo") {
+	IDSiteLevels = 7
+}
+
+
+//Gestion des chapitres et noms des pages
+  var chapitre1 = "";
+    var chapitre2 = "";
+    var chapitre3 = "";
+    var page_name_hera = "";   
+	var urlPath = window.location.pathname;
+	var urlArray = urlPath.split( '/' );
+	if (urlArray[2] === undefined || urlArray[2] === "" ) {
+	page_name_hera = rewriteATForHera(urlArray[1]);
+}
+else if (urlArray[3] === undefined && urlArray[2] !== undefined ){
+	page_name_hera = rewriteATForHera(urlArray[2])
+} 
+else if (urlArray[4] === undefined && urlArray[3] !== undefined ) {
+	chapitre1 = rewriteATForHera(urlArray[2]);
+	page_name_light = rewriteATForHera(urlArray[3]);
+	page_name_hera = chapitre1 + "::" + page_name_light
+}
+else if (urlArray[5] === undefined && urlArray[4] !== undefined ) {
+	chapitre1 = rewriteATForHera(urlArray[2]);
+	chapitre2 = rewriteATForHera(urlArray[3]);
+	page_name_light = rewriteATForHera(urlArray[4]);
+	page_name_hera = chapitre1 + "::" + chapitre2 + "::" + page_name_light
+}
+else if (urlArray[5] !== undefined) {
+	 chapitre1 = rewriteATForHera(urlArray[2]);
+	 chapitre2 = rewriteATForHera(urlArray[3]);
+	 chapitre3 = rewriteATForHera(urlArray[4]);
+	 page_name_light = rewriteATForHera(urlArray[5]);
+	 page_name_hera = chapitre1 + "::" + chapitre2 + "::" + chapitre3 + "::" + page_name_light
+} 
+  
+  
+  if (window.addEventListener){
+        window.ATInternet = {
+            onTrackerLoad: function(){
+                var ATconfig = {};
+                ATconfig.site = tC.internalvars.siteLevel1;
+                var ATTag = new window.ATInternet.Tracker.Tag(ATconfig);
+                ATTag.page.set({
+                    name: page_name_hera,
+                    level2: IDSiteLevels
+                });
+       ATTag.customVars.set({
+      site: {
+        "1": tC.internalvars.company_user_hera,
+        "2": tC.internalvars.direction_user_hera,
+        "3": tC.internalvars.sous_direction_user_hera
+        }})
+            ATTag.identifiedVisitor.set({
+        id: user_id_hera
+      });
+                ATTag.dispatch();
+            }
+        };
+        (function(){
+            var at = document.createElement('script');
+            at.type = 'text/javascript';
+            at.async = true;
+            at.src = '//tag.aticdn.net/559311/smarttag.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0] || document.getElementsByTagName('script')[0].parentNode).insertBefore(at, null);
+        })();
+    }  
+ // for pages with HREF being changed 
+  // store url on load
+var currentPage = location.href;
+// listen for changes
+setInterval(function(){
+    if (currentPage != location.href)
+    {
+        // page has changed, set new page as 'current'
+        currentPage = location.href;
+        // do your thing..
+      
+// Gestion de l'ID unique
+var user_id_hera = "";
+var connected_user = window.CONNECTED_USER;
+if (typeof connected_user !== "undefined") {
+  var connected_user_uid = connected_user.uid;
+  user_id_hera = connected_user_uid;
+} else {
+  user_id_hera = ""
+}
+
+// Gestion des IDs de site
+var IDSiteLevels = "";
+var urlPathSites = window.location.pathname;
+var urlArraySites = urlPathSites.split( '/' );
+if (urlArraySites[2] === undefined && urlArraySites[1] === "accueil"){
+	IDSiteLevels = 1
+}
+else if (urlArraySites[2] === "toute-lactualite") {
+	IDSiteLevels = 2
+}
+else if (urlArraySites[2] === "directions") {
+	IDSiteLevels = 3
+}
+else if (urlArraySites[2] === "groupe-mgen") {
+	IDSiteLevels = 4
+}
+else if (urlArraySites[2] === "services-rh") {
+	IDSiteLevels = 5
+}
+else if (urlArraySites[2] === "kiosque") {
+	IDSiteLevels = 6
+}
+else if (urlArraySites[2] === "hub-abo") {
+	IDSiteLevels = 7
+}      
+      
+    var chapitre1 = "";
+    var chapitre2 = "";
+    var chapitre3 = "";
+    var page_name_hera = "";   
+	var urlPath = window.location.pathname;
+	var urlArray = urlPath.split( '/' );
+	if (urlArray[2] === undefined || urlArray[2] === "" ) {
+	page_name_hera = rewriteATForHera(urlArray[1]);
+}
+else if (urlArray[3] === undefined && urlArray[2] !== undefined ){
+	page_name_hera = rewriteATForHera(urlArray[2])
+} 
+else if (urlArray[4] === undefined && urlArray[3] !== undefined ) {
+	chapitre1 = rewriteATForHera(urlArray[2]);
+	page_name_light = rewriteATForHera(urlArray[3]);
+	page_name_hera = chapitre1 + "::" + page_name_light
+}
+else if (urlArray[5] === undefined && urlArray[4] !== undefined ) {
+	chapitre1 = rewriteATForHera(urlArray[2]);
+	chapitre2 = rewriteATForHera(urlArray[3]);
+	page_name_light = rewriteATForHera(urlArray[4]);
+	page_name_hera = chapitre1 + "::" + chapitre2 + "::" + page_name_light
+}
+else if (urlArray[5] !== undefined) {
+	 chapitre1 = rewriteATForHera(urlArray[2]);
+	 chapitre2 = rewriteATForHera(urlArray[3]);
+	 chapitre3 = rewriteATForHera(urlArray[4]);
+	 page_name_light = rewriteATForHera(urlArray[5]);
+	 page_name_hera = chapitre1 + "::" + chapitre2 + "::" + chapitre3 + "::" + page_name_light
+} 
+      if (window.addEventListener){
+        window.ATInternet = {
+            onTrackerLoad: function(){
+                var ATconfig = {};
+                ATconfig.site = tC.internalvars.siteLevel1;
+                var ATTag = new window.ATInternet.Tracker.Tag(ATconfig);
+                ATTag.page.set({
+                    name: page_name_hera,
+                    level2: IDSiteLevels
+                });
+       ATTag.customVars.set({
+      site: {
+        "1": tC.internalvars.company_user_hera,
+        "2": tC.internalvars.direction_user_hera,
+        "3": tC.internalvars.sous_direction_user_hera
+        }})
+            ATTag.identifiedVisitor.set({
+        id: user_id_hera
+      });
+                ATTag.dispatch();
+            }
+        };
+        (function(){
+            var at = document.createElement('script');
+            at.type = 'text/javascript';
+            at.async = true;
+            at.src = '//tag.aticdn.net/559311/smarttag.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0] || document.getElementsByTagName('script')[0].parentNode).insertBefore(at, null);
+        })();
+    }
+    }
+}, 5000);
+<script>
+
+
+
+
+
+
+// New tag hera avec contrainte sur URL
+<script language="javascript">
+// For the first page being viewed
+
+// Contrainte sur l'URL
+var urlExclusion = window.location.pathname;
+if (urlExclusion.indexOf('ls') === -1) {
+
+
+// Gestion de l'ID unique
+var user_id_hera = "";
+var connected_user = window.CONNECTED_USER;
+if (typeof connected_user !== "undefined") {
+  var connected_user_uid = connected_user.uid;
+  user_id_hera = connected_user_uid;
+} else {
+  user_id_hera = ""
+}
+  
+
+// Gestion des IDs de site
+var IDSiteLevels = "";
+var urlPathSites = window.location.pathname;
+var urlArraySites = urlPathSites.split( '/' );
+if ((urlArraySites[2] === undefined || urlArraySites[2] === "") && urlArraySites[1] === "accueil"){
+	IDSiteLevels = 1
+}
+else if (urlArraySites[2] === "toute-lactualite") {
+	IDSiteLevels = 2
+}
+else if (urlArraySites[2] === "directions") {
+	IDSiteLevels = 3
+}
+else if (urlArraySites[2] === "groupe-mgen") {
+	IDSiteLevels = 4
+}
+else if (urlArraySites[2] === "services-rh") {
+	IDSiteLevels = 5
+}
+else if (urlArraySites[2] === "kiosque") {
+	IDSiteLevels = 6
+}
+else if (urlArraySites[2] === "hub-abo") {
+	IDSiteLevels = 7
+}
+
+
+//Gestion des chapitres et noms des pages
+  var chapitre1 = "";
+    var chapitre2 = "";
+    var chapitre3 = "";
+    var page_name_hera = "";   
+	var urlPath = window.location.pathname;
+	var urlArray = urlPath.split( '/' );
+	if (urlArray[2] === undefined || urlArray[2] === "" ) {
+	page_name_hera = rewriteATForHera(urlArray[1]);
+}
+else if (urlArray[3] === undefined && urlArray[2] !== undefined ){
+	page_name_hera = rewriteATForHera(urlArray[2])
+} 
+else if (urlArray[4] === undefined && urlArray[3] !== undefined ) {
+	chapitre1 = rewriteATForHera(urlArray[2]);
+	page_name_light = rewriteATForHera(urlArray[3]);
+	page_name_hera = chapitre1 + "::" + page_name_light
+}
+else if (urlArray[5] === undefined && urlArray[4] !== undefined ) {
+	chapitre1 = rewriteATForHera(urlArray[2]);
+	chapitre2 = rewriteATForHera(urlArray[3]);
+	page_name_light = rewriteATForHera(urlArray[4]);
+	page_name_hera = chapitre1 + "::" + chapitre2 + "::" + page_name_light
+}
+else if (urlArray[5] !== undefined) {
+	 chapitre1 = rewriteATForHera(urlArray[2]);
+	 chapitre2 = rewriteATForHera(urlArray[3]);
+	 chapitre3 = rewriteATForHera(urlArray[4]);
+	 page_name_light = rewriteATForHera(urlArray[5]);
+	 page_name_hera = chapitre1 + "::" + chapitre2 + "::" + chapitre3 + "::" + page_name_light
+} 
+  
+  
+  if (window.addEventListener){
+        window.ATInternet = {
+            onTrackerLoad: function(){
+                var ATconfig = {};
+                ATconfig.site = tC.internalvars.siteLevel1;
+                var ATTag = new window.ATInternet.Tracker.Tag(ATconfig);
+                ATTag.page.set({
+                    name: page_name_hera,
+                    level2: IDSiteLevels
+                });
+       ATTag.customVars.set({
+      site: {
+        "1": tC.internalvars.company_user_hera,
+        "2": tC.internalvars.direction_user_hera,
+        "3": tC.internalvars.sous_direction_user_hera
+        }})
+            ATTag.identifiedVisitor.set({
+        id: user_id_hera
+      });
+                ATTag.dispatch();
+            }
+        };
+        (function(){
+            var at = document.createElement('script');
+            at.type = 'text/javascript';
+            at.async = true;
+            at.src = '//tag.aticdn.net/559311/smarttag.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0] || document.getElementsByTagName('script')[0].parentNode).insertBefore(at, null);
+        })();
+    }  
+}
+ // for pages with HREF being changed 
+
+
+  // store url on load
+var currentPage = location.href;
+// listen for changes
+setInterval(function(){
+// URL exclusion 
+ var urlExclusionBis = window.location.pathname;
+if (urlExclusionBis.indexOf('ls') === -1) {	
+    if (currentPage != location.href)
+    {
+        // page has changed, set new page as 'current'
+        currentPage = location.href;
+        // do your thing..
+      
+// Gestion de l'ID unique
+var user_id_hera = "";
+var connected_user = window.CONNECTED_USER;
+if (typeof connected_user !== "undefined") {
+  var connected_user_uid = connected_user.uid;
+  user_id_hera = connected_user_uid;
+} else {
+  user_id_hera = ""
+}
+
+// Gestion des IDs de site
+var IDSiteLevels = "";
+var urlPathSites = window.location.pathname;
+var urlArraySites = urlPathSites.split( '/' );
+if (urlArraySites[2] === undefined && urlArraySites[1] === "accueil"){
+	IDSiteLevels = 1
+}
+else if (urlArraySites[2] === "toute-lactualite") {
+	IDSiteLevels = 2
+}
+else if (urlArraySites[2] === "directions") {
+	IDSiteLevels = 3
+}
+else if (urlArraySites[2] === "groupe-mgen") {
+	IDSiteLevels = 4
+}
+else if (urlArraySites[2] === "services-rh") {
+	IDSiteLevels = 5
+}
+else if (urlArraySites[2] === "kiosque") {
+	IDSiteLevels = 6
+}
+else if (urlArraySites[2] === "hub-abo") {
+	IDSiteLevels = 7
+}      
+      
+    var chapitre1 = "";
+    var chapitre2 = "";
+    var chapitre3 = "";
+    var page_name_hera = "";   
+	var urlPath = window.location.pathname;
+	var urlArray = urlPath.split( '/' );
+	if (urlArray[2] === undefined || urlArray[2] === "" ) {
+	page_name_hera = rewriteATForHera(urlArray[1]);
+}
+else if (urlArray[3] === undefined && urlArray[2] !== undefined ){
+	page_name_hera = rewriteATForHera(urlArray[2])
+} 
+else if (urlArray[4] === undefined && urlArray[3] !== undefined ) {
+	chapitre1 = rewriteATForHera(urlArray[2]);
+	page_name_light = rewriteATForHera(urlArray[3]);
+	page_name_hera = chapitre1 + "::" + page_name_light
+}
+else if (urlArray[5] === undefined && urlArray[4] !== undefined ) {
+	chapitre1 = rewriteATForHera(urlArray[2]);
+	chapitre2 = rewriteATForHera(urlArray[3]);
+	page_name_light = rewriteATForHera(urlArray[4]);
+	page_name_hera = chapitre1 + "::" + chapitre2 + "::" + page_name_light
+}
+else if (urlArray[5] !== undefined) {
+	 chapitre1 = rewriteATForHera(urlArray[2]);
+	 chapitre2 = rewriteATForHera(urlArray[3]);
+	 chapitre3 = rewriteATForHera(urlArray[4]);
+	 page_name_light = rewriteATForHera(urlArray[5]);
+	 page_name_hera = chapitre1 + "::" + chapitre2 + "::" + chapitre3 + "::" + page_name_light
+} 
+      if (window.addEventListener){
+        window.ATInternet = {
+            onTrackerLoad: function(){
+                var ATconfig = {};
+                ATconfig.site = tC.internalvars.siteLevel1;
+                var ATTag = new window.ATInternet.Tracker.Tag(ATconfig);
+                ATTag.page.set({
+                    name: page_name_hera,
+                    level2: IDSiteLevels
+                });
+       ATTag.customVars.set({
+      site: {
+        "1": tC.internalvars.company_user_hera,
+        "2": tC.internalvars.direction_user_hera,
+        "3": tC.internalvars.sous_direction_user_hera
+        }})
+            ATTag.identifiedVisitor.set({
+        id: user_id_hera
+      });
+                ATTag.dispatch();
+            }
+        };
+        (function(){
+            var at = document.createElement('script');
+            at.type = 'text/javascript';
+            at.async = true;
+            at.src = '//tag.aticdn.net/559311/smarttag.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0] || document.getElementsByTagName('script')[0].parentNode).insertBefore(at, null);
+        })();
+    }
+    }
+}}, 5000);
+<script>
+
+
+
+
+
+// Tag d'automatick tracking download pour HERA
+ <script type="text/javascript">
+window.addEventListener("load", function() {
+  var ATconfig = new Object();
+  ATconfig.site = tC.internalvars.siteLevel1;
+  if (typeof ATInternet.Tracker !== "undefined") {
+    var ATTag = new window.ATInternet.Tracker.Tag(ATconfig);
+    if (typeof jQuery != 'undefined') {
+      jQuery(document).ready(function($) {
+        $.expr[':'].regex = function(e, i, m) {
+          var mP = m[3].split(','),
+            l = /^(data|css):/,
+            a = {
+              method: mP[0].match(l) ? mP[0].split(':')[0] : 'attr',
+              property: mP.shift().replace(l, '')
+            },
+            r = new RegExp(mP.join('').replace(/^\s+|\s+$/g, ''), 'ig');
+          return r.test($(e)[a.method](a.property));
+        };
+        $('a:regex(href,^.*\\.(zip|mp\d+|mpe?g|pdf|docx?|pptx?|xlsx?|jpe?g|png|gif|tiff?)$)').bind('click', function(e) {
+          // Use " this.href.replace(/^.*\/\//, '') " to pass the link in parameter
+var href_gathered = this.href.replace(/^.*\/\//, '');
+var fileAdmin = "fileadmin";
+if (href_gathered.includes(fileAdmin)) {
+
+	var href_splitted = href_gathered.split( '/' , 6);
+	var href_splitted_docName = href_splitted[5];
+  var automatic_tracking_download = href_splitted_docName;
+}
+
+ else {
+ 
+  automatic_tracking_download = this.href.replace(/^.*\/\//, '')
+  
+     }
+     
+
+          if (tc_vars["page_cat3"]) {
+            return ATTag.click.send({
+              elem: this,
+              name: automatic_tracking_download,
+              chapter1: tc_vars["page_cat1"],
+              chapter2: tc_vars["page_cat2"],
+              chapter3: tc_vars["page_cat3"],
+              level2: tc_vars["env_subsite"],
+              type: 'action'
+            });
+          } else if (tc_vars["page_cat2"]) {
+            return ATTag.click.send({
+              elem: this,
+              name: automatic_tracking_download,
+              chapter1: tc_vars["page_cat1"],
+              chapter2: tc_vars["page_cat2"],
+              level2: tc_vars["env_subsite"],
+              type: 'action'
+            });
+          } else if (tc_vars["page_cat1"]) {
+            return ATTag.click.send({
+              elem: this,
+              name: automatic_tracking_download,
+              chapter1: tc_vars["page_cat1"],
+              level2: tc_vars["env_subsite"],
+              type: 'action'
+            });
+          } else {
+            return ATTag.click.send({
+              elem: this,
+              name: automatic_tracking_download,
+              level2: tc_vars["env_subsite"],
+              type: 'action'
+            });
+          }
+
+});
+      });
+    }
+  }
+})
+<script>
+
+
+
+// Gestion de la date pour SimSite sur la balide WEB_CONNEXION_LAST_DT
+if (tC.internalvars.user_connected_SimSite === 1) {
+var currentdate = new Date();
+var realCurrentDateTime = currentdate.getDate() + "/" + currentdate.getMonth() + "/" + currentdate.getFullYear();
+}
+
+
+
+
+
+
